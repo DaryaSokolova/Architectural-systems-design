@@ -1,11 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Microsoft.Data.SqlClient;
 using WebApplication7.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace WebApplication7.Controllers
 {
@@ -18,31 +20,38 @@ namespace WebApplication7.Controllers
             _logger = logger;
         }
 
-        [HttpPost]
-        public IActionResult Index() //input
-        {
-            return View();
-        }
-
-        //public IActionResult Index() //input
+        //public IActionResult Index()
         //{
         //    return View();
         //}
 
-        [HttpPost]
-        public IActionResult Privacy(string name, string password)//registration
+        [Authorize]
+        public IActionResult Index()
         {
-            Entity_new.Authorization obj = new Entity_new.Authorization();
-            obj.Name = name;
-            obj.Password = password;
-            new BL.AuthorizationBL().Registration(obj);
+            return Content(User.Identity.Name);
+        }
+
+        //[HttpPost]
+        //public IActionResult Index(string name, string password) //Регистрация
+        //{
+        //    Entity_new.Authorization auth = new Entity_new.Authorization();
+        //    auth.Name = name;
+        //    auth.Password = password;
+        //    new BL.AuthorizationBL().Registration(auth);
+
+        //    return View();
+        //}
+
+        public IActionResult Login()
+        {
             return View();
         }
 
-        //public IActionResult Privacy(string name, string password)//registration
-        //{
-        //    return View();
-        //}
+        [HttpPost]
+        public IActionResult Login(string name, string password)
+        {
+            return View();
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-
-#nullable disable
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace DAL
 {
-    public partial class User
+    public partial class Users
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public byte[] Password { get; set; }
-        public double Total { get; set; }
+        public int Total { get; set; }
     }
 }
