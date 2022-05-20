@@ -4,13 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL
+namespace Entity_new
 {
-    public partial class User
+    public class SessionEnity
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public byte[] Password { get; set; }
-        public int Total { get; set; }
+        public int UserId { get; set; }
+        public int GameId { get; set; }
     }
 }

@@ -2,6 +2,8 @@
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Linq;
+using Entity_new;
 
 namespace DAL
 {
@@ -18,18 +20,45 @@ namespace DAL
             return hash;
         }
 
-        public void Registration(Entity_new.Authorization auth)
+        public void AddOrUpdate(Entity_new.Authorization auth)
         {
 
             using (bakaContext data = new bakaContext())
             {
-                data.Users.Add(new User()
+                var t = data.Users.FirstOrDefault(item => item.Name == auth.Name);
+                if (t == null)
                 {
-                    Name = auth.Name,
-                    Password = GetStringHash(auth.Password)
-                });
+
+                    data.Users.Add(new User()
+                    {
+                        Name = auth.Name,
+                        Password = GetStringHash(auth.Password)
+                    });
+                }
+                else
+                {
+                    t.Name = auth.Name;
+                    t.Password = GetStringHash(auth.Password);
+                }
                 data.SaveChanges();
             }
+        }
+
+        public Entity_new.Authorization Get(string Name)
+        {
+            using (bakaContext data = new bakaContext())
+            {
+                var t = data.Users.FirstOrDefault(item => Name == item.Name);
+                if (t == null)
+                    return null;
+                Authorization en = new Authorization();
+                en.Id = t.Id;
+                en.Name = t.Name;
+                en.HashPassword = t.Password;
+
+                return en;
+            }
+
         }
     }
 }
